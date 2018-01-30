@@ -6,6 +6,9 @@ const app           = new routes();
 app.get('/', defaultPages.homePage);
 app.get('/about', defaultPages.aboutPage);
 app.assets('assets');
+app.libraries([
+  'bootstrap'
+]);
 
 http.createServer( (req, res) => {
   app.serveRoute(req, res);

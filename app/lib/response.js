@@ -43,6 +43,23 @@ class Response {
     });
   } 
 
+  returnLibrary(uriPath) {
+    let filePath = "./node_modules" + (uriPath.replace("/lib", ""));
+    let fileExtension = path.extname(filePath);
+    let fileMineType  = mime.lookup(fileExtension);
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if(err) { 
+        console.log("error");
+        this.returnJson(400, "ok");
+      } else {
+        this.res.writeHead(200, {'Content-Type': fileMineType});
+        this.res.write(data);
+        this.res.end();
+      }
+    });
+  }
+
 }
 
 module.exports = Response;

@@ -6,7 +6,8 @@ class Routes {
     this.port = port !== 'undefined' ? port : 8080;
     this.routes = [];
     this.assetsPath;
-    this.assetsRegex = /^\/(assets)\/(.*)$/g;
+    this.librariesPath;
+    this.librariesDirName = "lib";
   }
 
   get(path, action) {
@@ -43,9 +44,11 @@ class Routes {
 
     if( this.isAssets(routePath) ) {
       this.serveAssets(routePath, req, resL);
-      return;
+      return true;
+    } else if( this.isLibrary(routePath) ) {
+      this.serveLibrary(routePath, req, resL);
+      return true;
     }
-
     let searchRes = this.routes.find( (route) => {
       return route.path == routePath && route.method == routeMethod;
     });
@@ -63,12 +66,27 @@ class Routes {
     this.assetsPath = path;
   }
 
+  libraries(paths) {
+    this.librariesPath = paths;
+  }
+
   isAssets(path) {
     if(typeof this.assetsPath == 'undefined') {
       return false;
     }
     let regex = new RegExp("^\/" + this.assetsPath + "\/(.*)$", "g");
     return regex.test(path);
+  }
+
+  isLibrary(path) {
+    if(typeof this.librariesPath == 'undefined') {
+      return false;
+    }
+    let pathSplit = path.split('/');
+    if( pathSplit.length < 3 || pathSplit[1] != this.librariesDirName ) {
+      return false;
+    }
+    return this.librariesPath.includes(pathSplit[2]);
   }
 
   errorPage(req, res) {
@@ -79,6 +97,10 @@ class Routes {
 
   serveAssets(path, req, res) {
     res.returnAssets(path);
+  }
+
+  serveLibrary(path, req, res) {
+    res.returnLibrary(path);
   }
 
 }
