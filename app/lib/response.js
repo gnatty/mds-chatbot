@@ -15,7 +15,6 @@ class Response {
   }
 
   returnView(path) {
-    console.log(path);
     fs.readFile(path, 'utf8', (err, data) => {
       if(err) { 
         this.returnJson(400, "ok");
@@ -50,7 +49,6 @@ class Response {
 
     fs.readFile(filePath, 'utf8', (err, data) => {
       if(err) { 
-        console.log("error");
         this.returnJson(400, "ok");
       } else {
         this.res.writeHead(200, {'Content-Type': fileMineType});

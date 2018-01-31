@@ -2,9 +2,9 @@
 socket.on('user::askCredentials', function(data) {
   var userToken = getUserToken();
   if(userToken === null || userToken.length < 30) {
-    console.log('null');
+    socket.emit('user:newCredentials');
   } else {
-    console.log('no null');
+    socket.emit('user::checkCredentials', userToken);
   }
 });
 
