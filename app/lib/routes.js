@@ -8,6 +8,15 @@ class Routes {
     this.assetsPath;
     this.librariesPath;
     this.librariesDirName = "lib";
+    this.users = 0;
+  }
+
+  setUser() {
+    this.users++;
+  }
+
+  getUsers() {
+    console.log(this.users);
   }
 
   get(path, action) {
