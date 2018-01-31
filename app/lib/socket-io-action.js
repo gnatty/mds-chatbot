@@ -1,4 +1,4 @@
-module.exports = (socket, logSocket) => {
+module.exports = (socket, logSocket, dataUsers) => {
 
   socket.emit('user::askCredentials', null);
 
@@ -6,6 +6,7 @@ module.exports = (socket, logSocket) => {
     logSocket('token');
   });
   socket.on('user:newCredentials', () => {
+    // let newToken = dataUsers.createToken('root');
     logSocket('new token asked');
   });
 

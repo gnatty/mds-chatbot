@@ -45,7 +45,7 @@ const server = http.createServer( (req, res) => {
 io(server).on('connection', (socket) => {
   logSocket('New client');
 
-  socketIoAction(socket, logSocket);
+  socketIoAction(socket, logSocket, dataUsers);
 });
 
 server.listen(app.port, () => {
