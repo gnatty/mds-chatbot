@@ -12,7 +12,7 @@ const routes          = require('./app/lib/routes.js');
 const defaultPages    = require('./app/pages/defaultPages.js');
 const users           = require('./app/lib/users.js');
 const socketIoAction  = require('./app/lib/socket-io-action.js');
-
+const chat            = require('./app/lib/chat.js');
 /**
   * DEBUG VARIABLES.
   */
@@ -25,6 +25,11 @@ const logServer       = debug('log::server');
   */
 const app             = new routes(logApp);
 const dataUsers       = new users();
+const chatUse         = new chat([
+  'help',
+  'register',
+  'login'
+]);
 
 /**
   * APP ROUTER CONFIGURATION.
@@ -44,8 +49,7 @@ const server = http.createServer( (req, res) => {
 
 io(server).on('connection', (socket) => {
   logSocket('New client');
-
-  socketIoAction(socket, logSocket, dataUsers);
+  socketIoAction(socket, logSocket, dataUsers, chatUse);
 });
 
 server.listen(app.port, () => {

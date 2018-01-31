@@ -10,10 +10,9 @@ function sendMessage(msg) {
   socket.emit('user::message', 
     {
       token: getUserToken(),
-      msessage: msg
+      message: msg
     }
   );
-  // setMessageRight('root', msg);
 }
 
 function setMessageRight(username, msg) {

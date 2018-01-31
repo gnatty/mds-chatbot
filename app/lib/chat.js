@@ -24,6 +24,21 @@ class Chat {
     };
   }
 
+  isEmptyMessage(message) {
+    if(typeof message == 'undefined' || message == "") {
+      return true;
+    }
+    return false;
+  }
+
+  isValidObject(obj) {
+    if(typeof obj != "object" 
+      || typeof obj.message != "string" || typeof obj.token != "string") {
+      return false;
+    }
+    return true;
+  }
+
 }
 
 module.exports = Chat;

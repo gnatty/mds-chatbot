@@ -1,4 +1,4 @@
-module.exports = (socket, logSocket, dataUsers) => {
+module.exports = (socket, logSocket, dataUsers, chat) => {
 
   /**
     * USER CREDENTIALS.
@@ -18,8 +18,25 @@ module.exports = (socket, logSocket, dataUsers) => {
     * USER MESSAGE.
     *
     */
-  socket.on('user::message', (msg) => {
-    logSocket(msg);
+  socket.on('user::message', (obj) => {
+    // --- check if is valid data object.
+    if( !chat.isValidObject(obj) ) {
+      return false;
+    }
+    // --- check if message is empty.
+    if( chat.isEmptyMessage(obj.message) ) {
+      return false;
+    }
+    // --- check if it's a command.
+    if( chat.isCommande(obj.message) ) {
+      let cmd = chat.getCommande(obj.message);
+      logSocket("Cmd found :");
+      logSocket(cmd);
+      return true;
+    }
+    // --- else it's just a normal text message.
+    logSocket("Normal message received");
+    logSocket(obj);
   });
 
   /**

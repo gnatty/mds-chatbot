@@ -1,6 +1,10 @@
 
 function getUserToken() {
-  return localStorage.getItem(selectorUserToken);
+  var token = localStorage.getItem("selectorUserToken");
+  if(token == null) {
+    return "";
+  }
+  return token;
 }
 
 function setUserToken(token) {
