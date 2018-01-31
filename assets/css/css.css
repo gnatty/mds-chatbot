@@ -83,7 +83,11 @@ body {
   text-align: right;
 }
 
-
 .chat-bar {
   background-color: green;
 } 
+
+.btnSendMessage {
+  background-color: #795548;
+  color: white;
+}
