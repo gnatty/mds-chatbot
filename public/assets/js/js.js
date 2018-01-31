@@ -2,9 +2,13 @@
   * Get current user input message.
   *
   */
+var saveLastMessage = function getUserMessage() {
+  lastMessage = $(selectorMessage).val();
+  $(selectorMessage).val("");
+}
+
 var getUserMessage = function getUserMessage() {
-  var msg = $(selectorMessage).val();
-  return msg;
+  return lastMessage;
 }
 
 /**
@@ -32,7 +36,7 @@ $(selectorMessage).on('keyup', function(event) {
   */
 $(selectorMessage).bind("enterKey", function(event) {
   event.preventDefault();
-  console.log(getUserMessage());
-  sendMessage(getUserMessage());
+  saveLastMessage();
+  sendMessage();
 });
 

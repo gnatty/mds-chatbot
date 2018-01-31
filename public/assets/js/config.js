@@ -2,6 +2,7 @@
   * Selector
   *
   */
+var lastMessage           = "";
 var selectorMessage       = ".inputSendMessage";
 var selectorSendMessage   = ".btnSendMessage";
 var selectorUserToken     = "user::token";

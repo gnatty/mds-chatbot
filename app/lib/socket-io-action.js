@@ -21,10 +21,12 @@ module.exports = (socket, logSocket, dataUsers, chat) => {
   socket.on('user::message', (obj) => {
     // --- check if is valid data object.
     if( !chat.isValidObject(obj) ) {
+      logSocket("Not a valid object");
       return false;
     }
     // --- check if message is empty.
     if( chat.isEmptyMessage(obj.message) ) {
+      logSocket("Empty message");
       return false;
     }
     // --- check if it's a command.
@@ -37,6 +39,12 @@ module.exports = (socket, logSocket, dataUsers, chat) => {
     // --- else it's just a normal text message.
     logSocket("Normal message received");
     logSocket(obj);
+    socket.emit('user::newMessage::sender', {
+      message: obj.message
+    });
+    socket.broadcast.emit('user::newMessage::all', {
+      message: obj.message
+    });
   });
 
   /**
