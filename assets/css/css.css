@@ -1,3 +1,89 @@
-* {
-  background-color: #333;
+body {
+
 }
+
+/**
+*
+* GLOBAL
+*/
+.resetBorderRadius {
+  border-radius: initial !important;
+}
+
+
+
+/**
+*
+* CHAT BAR STYLE
+*/
+
+.main-bloc {
+  background-color: purple;
+
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.left-column {
+  background-color: yellow;
+  min-width: 300px;
+  width: 300px;
+}
+
+.right-column {
+  background-color: red;
+
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-content {
+  background-color: #F5F5F5;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: scroll;
+}
+
+.userList {
+  background-color: white;
+}
+
+.userList > .list-group > .list-group-item {
+  border: initial !important;
+}
+
+.message-global {
+  margin: 0 1rem 1rem 1rem;
+}
+.message-global > .labelUserName {
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.message-global > .card {
+  max-width: 90%;
+}
+
+.message-left {
+}
+.message-left > .card {
+  float: left;
+}
+
+.message-right {
+}
+.message-right > .card {
+  float: right;
+}
+
+.message-right > .labelUserName {
+  text-align: right;
+}
+
+
+.chat-bar {
+  background-color: green;
+} 
