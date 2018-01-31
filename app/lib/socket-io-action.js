@@ -1,5 +1,9 @@
 module.exports = (socket, logSocket, dataUsers) => {
 
+  /**
+    * USER CREDENTIALS.
+    *
+    */
   socket.emit('user::askCredentials', null);
 
   socket.on('user::checkCredentials', (token) => {
@@ -10,10 +14,18 @@ module.exports = (socket, logSocket, dataUsers) => {
     logSocket('new token asked');
   });
 
-  socket.on('user::msg', (msg) => {
+  /**
+    * USER MESSAGE.
+    *
+    */
+  socket.on('user::message', (msg) => {
     logSocket(msg);
   });
 
+  /**
+    * ON DISCONNECT.
+    *
+    */
   socket.on('disconnect', () => {
     logSocket('user disconnected');
   });

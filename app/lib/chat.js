@@ -26,16 +26,4 @@ class Chat {
 
 }
 
-
-let cmdList = [
-  'cmd',
-  'help',
-  'register'
-];
-
-let ee = new Chat(cmdList);
-
-if(ee.isCommande("/cmd")) {
-  console.log(ee.getCommande("/cmd"));
-}
-
+module.exports = Chat;

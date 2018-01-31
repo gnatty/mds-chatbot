@@ -7,14 +7,13 @@ socket.on('user::askCredentials', function(data) {
 });
 
 function sendMessage(msg) {
-  socket.emit('user::msg', 
+  socket.emit('user::message', 
     {
       token: getUserToken(),
       msessage: msg
     }
   );
-
-  setMessageRight('root', msg);
+  // setMessageRight('root', msg);
 }
 
 function setMessageRight(username, msg) {
