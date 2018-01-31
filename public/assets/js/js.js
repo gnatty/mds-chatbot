@@ -1,11 +1,3 @@
-
-/**
-  * Selector
-  *
-  */
-var selectorMessage       = ".inputSendMessage";
-var selectorSendMessage   = ".btnSendMessage";
-
 /**
   * Get current user input message.
   *

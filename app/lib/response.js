@@ -28,7 +28,7 @@ class Response {
   } 
 
   returnAssets(uriPath) {
-    let filePath      = "." + uriPath;
+    let filePath      = "./public" + uriPath;
     let fileExtension = path.extname(filePath);
     let fileMineType  = mime.lookup(fileExtension);
     

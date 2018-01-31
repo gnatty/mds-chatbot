@@ -7,7 +7,7 @@ let aboutPage = (req, res) => {
 };
 
 let homePage = (req, res) => {
-  res.returnView('./views/index.html');
+  res.returnView('./public/views/index.html');
 }
 
 module.exports = {

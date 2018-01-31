@@ -2,7 +2,8 @@ const response = require('./response.js');
 
 class Routes {
 
-  constructor(port = 'undefined') {
+  constructor(log, port = 'undefined') {
+    this.log = log;
     this.port = port !== 'undefined' ? port : 8080;
     this.routes = [];
     this.assetsPath;
@@ -16,7 +17,7 @@ class Routes {
   }
 
   getUsers() {
-    console.log(this.users);
+    this.log(this.users);
   }
 
   get(path, action) {
@@ -33,7 +34,7 @@ class Routes {
     });
     if(typeof searchRes != 'undefined') {
       // --- Throw error.
-      console.error(`[App] Route already exist for method ${method} and path ${path}`);
+      this.log(`Route already exist for method ${method} and path ${path}`);
     } else {
       this.routes.push(
         {
@@ -42,7 +43,7 @@ class Routes {
           "action"  : action
         }
       );
-      console.info(`[App] New Route added\nMethod : ${method}\nPath : ${path}`);
+      this.log(`New Route added\nMethod : ${method}\nPath : ${path}`);
     }
   }
 
@@ -65,7 +66,7 @@ class Routes {
     if(typeof searchRes == 'undefined') {
       // --- Throw error.
       this.errorPage(req, res);
-      console.error("[App] Route not found");
+      this.log("Route not found");
     } else {
       searchRes.action(req, resL);
     }

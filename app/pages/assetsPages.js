@@ -1,6 +1,6 @@
 
 let assetsPages = (req, res) => {
-  res.returnView('./views/index.html');
+  res.returnView('./public/views/index.html');
 }
 
 module.exports = {

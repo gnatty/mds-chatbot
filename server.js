@@ -1,8 +1,18 @@
 const http          = require('http');
 const routes        = require('./app/lib/routes.js');
 const defaultPages  = require('./app/pages/defaultPages.js');
-const app           = new routes();
-let globalIo;
+const users         = require('./app/lib/users.js');
+const debug         = require('debug');
+
+
+const logApp        = debug('log::app');
+const logSocket     = debug('log::socket');
+const logServer     = debug('log::server');
+
+
+const app           = new routes(logApp);
+const dataUsers     = new users();
+
 
 app.get('/', defaultPages.homePage);
 app.get('/about', defaultPages.aboutPage);
@@ -13,6 +23,7 @@ app.libraries([
   'jquery'
 ]);
 
+
 const server = http.createServer( (req, res) => {
   app.serveRoute(req, res);
 });
@@ -20,27 +31,27 @@ const server = http.createServer( (req, res) => {
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-  globalIo = socket;
-  console.log(socket.id);
-  app.setUser();
-  app.getUsers();
+  logSocket('New client');
 
-  console.log('[SOCKET IO] ========> new client');
+  socket.emit('user::askCredentials', null);
+  socket.on('user::checkCredentials', (token) => {
+    debug('token');
+  });
+  socket.on('user:newCredentials', () => {
 
-  socket.emit('user::welcome', 'connected');
+  });
 
   socket.on('user::msg', (msg) => {
     console.log(msg);
   });
 
   socket.on('disconnect', () => {
-    globalIo = null;
     console.log('user disconnected');
-  })
-})
+  });
+});
 
 server.listen(app.port, () => {
-  console.info(`[Server] Listening on port ${app.port}`);
+  logServer(`Listening on port ${app.port}`);
 });
 
 
