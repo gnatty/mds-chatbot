@@ -40,9 +40,11 @@ class Users {
     return decoded;
   }
 
-  getList() {
-    console.log("[Users] => list");
-    console.log(this.list);
+  ifEmptyToken(token) {
+    if(typeof token == 'undefined' || token == "") {
+      return true;
+    }
+    return false;
   }
 
 }

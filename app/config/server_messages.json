@@ -1,0 +1,11 @@
+{
+  "SOCKET_IO": {
+    "NOT_VALID_OBJECT": "Not a valid object.",
+    "EMPTY_MESSAGE": "Empty message",
+    "CMD_FOUND": "Command found.",
+    "EMPTY_TOKEN_WITH_CMD": "Empty token with command found.",
+    "EMPTY_TOKEN": "Empty token",
+    "DISCONNECTED": "User disconnected",
+    "MESSAGE_RECEIVED": "Normal message received"
+  }
+}

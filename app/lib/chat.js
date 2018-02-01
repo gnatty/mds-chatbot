@@ -1,27 +1,17 @@
 class Chat {
 
-  constructor(commandesList = 'undefined') {
-    this.regex = new RegExp("^\/([a-zA-Z0-9]+)((\\s(.*))?)$", "g");
-    this.commandesList = [];
-    if(typeof commandesList != 'undefined') {
-      this.commandesList = commandesList;
-    }
+  constructor(bot) {
+    this.bot    = bot;
+    this.regex  = new RegExp("^\/([a-zA-Z0-9]+)((\\s(.*))?)$", "g");
   }
 
-  isCommande(message) {
+  getBot() {
+    return this.bot;
+  }
+
+  isCommand(message) {
     let res = message.split(this.regex);
-    if(res.length < 3 || !this.commandesList.includes(res[1]) ) {
-      return false;
-    }
-    return true;
-  }
-
-  getCommande(message) {
-    let cmdRes = message.split(this.regex);
-    return {
-      "cmd"   : cmdRes[1],
-      "value" :  cmdRes[2]
-    };
+    return res.length >= 3;
   }
 
   isEmptyMessage(message) {
@@ -39,6 +29,32 @@ class Chat {
     return true;
   }
 
+  isEmptyToken(token) {
+    if(typeof token == 'undefined' || token == "") {
+      return true;
+    }
+    return false;
+  }
+
+  getCommand(message) {
+    let cmdRes = message.split(this.regex);
+    return {
+      'cmd'    : cmdRes[1],
+      'value'  : cmdRes[2].trim()
+    };
+  }
+
+  validator(obj) {
+    return {
+      "isValidObject"   : this.isValidObject(obj),
+      "isEmptyMessage"  : this.isEmptyMessage(obj.message),
+      "isCommand"       : this.isCommand(obj.message),
+      "isEmptyToken"    : this.isEmptyToken(obj.token)
+    };
+  }
+
 }
 
-module.exports = Chat;
+module.exports = (bot) => {
+  return new Chat(bot);
+}

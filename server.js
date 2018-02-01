@@ -3,16 +3,7 @@
   */
 const http            = require('http');
 const debug           = require('debug');
-const io              = require('socket.io')
 
-/**
-  * PROJECT LIB.
-  */
-const routes          = require('./app/lib/routes.js');
-const defaultPages    = require('./app/pages/defaultPages.js');
-const users           = require('./app/lib/users.js');
-const socketIoAction  = require('./app/lib/socket-io-action.js');
-const chat            = require('./app/lib/chat.js');
 /**
   * DEBUG VARIABLES.
   */
@@ -21,15 +12,16 @@ const logSocket       = debug('log::socket');
 const logServer       = debug('log::server');
 
 /**
-  * INSTANTIATE.
+  * PROJECT LIB.
   */
+const routes          = require('./app/lib/routes.js');
+const users           = require('./app/lib/users.js');
+const defaultPages    = require('./app/pages/defaultPages.js');
+const bot             = require('./app/bot/bot.js');
+const chat            = require('./app/lib/chat.js')(bot);
+const io              = require('./app/socket-io/index.js');
 const app             = new routes(logApp);
 const dataUsers       = new users();
-const chatUse         = new chat([
-  'help',
-  'register',
-  'login'
-]);
 
 /**
   * APP ROUTER CONFIGURATION.
@@ -43,21 +35,14 @@ app.libraries([
   'jquery'
 ]);
 
-
 const server = http.createServer( (req, res) => {
   app.serveRoute(req, res);
 });
 
-io(server).on('connection', (socket) => {
-  logSocket('New client');
-  socketIoAction(socket, logSocket, dataUsers, chatUse);
-});
+io.run(server, chat);
 
 server.listen(app.port, () => {
   logServer(`Listening on port ${app.port}`);
 });
-
-
-
 
 

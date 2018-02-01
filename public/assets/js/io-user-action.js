@@ -7,10 +7,10 @@ socket.on('user::askCredentials', function(data) {
 });
 
 socket.on('user::newMessage::sender', function(data) {
-  setMessageRight('root', data.message);
+  setMessage('right', data);
 });
 socket.on('user::newMessage::all', function(data) {
-  setMessageLeft('root', data.message);
+  setMessage('left', data);
 });
 
 function sendMessage() {
@@ -23,24 +23,19 @@ function sendMessage() {
   );
 }
 
-function setMessageRight(username, msg) {
+function setMessage(dir, data) {
+  var sel       = dir=="left"?selectorTemplate.left : selectorTemplate.right;
+  var template  = $($(sel).html());
 
-  var template = $($(selectorTemplate.right).html());
-  template.find('.labelUserName').text('@'+username);
-  template.find('.card-text').text(msg);
+  template.find('.labelUserName').text('@'+data.username);
+  switch(data.type) {
+    case "html":
+      template.find('.card-text').html($.parseHTML(data.message));
+    break;
+    case "text":
+      template.find('.card-text').text(data.message);
+    break;
+  }
 
-  console.log(template);
   $(selectorChatContent).prepend(template);
-  console.log($(selectorChatContent));
-}
-
-function setMessageLeft(username, msg) {
-
-  var template = $($(selectorTemplate.left).html());
-  template.find('.labelUserName').text('@'+username);
-  template.find('.card-text').text(msg);
-
-  console.log(template);
-  $(selectorChatContent).prepend(template);
-  console.log($(selectorChatContent));
 }
