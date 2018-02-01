@@ -1,14 +1,18 @@
+const http = require('http');
+const debug = require('debug');
+const log = debug('log::server');
+const logServer = debug('log::server');
 const response = require('./response.js');
 
-class Routes {
+class Server {
 
-  constructor(log, port = 'undefined') {
-    this.log = log;
+  constructor(port = 'undefined') {
     this.port = port !== 'undefined' ? port : 8080;
     this.routes = [];
     this.assetsPath;
     this.librariesPath;
     this.librariesDirName = "lib";
+    this.httpServer;
   }
 
   get(path, action) {
@@ -25,7 +29,7 @@ class Routes {
     });
     if(typeof searchRes != 'undefined') {
       // --- Throw error.
-      this.log(`Route already exist for method ${method} and path ${path}`);
+      log(`Route already exist for method ${method} and path ${path}`);
     } else {
       this.routes.push(
         {
@@ -34,7 +38,7 @@ class Routes {
           "action"  : action
         }
       );
-      this.log(`New Route added\nMethod : ${method}\nPath : ${path}`);
+      log(`New Route added\nMethod : ${method}\nPath : ${path}`);
     }
   }
 
@@ -57,7 +61,7 @@ class Routes {
     if(typeof searchRes == 'undefined') {
       // --- Throw error.
       this.errorPage(req, res);
-      this.log("Route not found");
+      log("Route not found");
     } else {
       searchRes.action(req, resL);
     }
@@ -104,6 +108,24 @@ class Routes {
     res.returnLibrary(path);
   }
 
+  getHttpServer() {
+    return this.httpServer;
+  }
+
+  init() {
+    this.httpServer = http.createServer( (req, res) => {
+      this.serveRoute(req, res);
+    });
+  }
+
+  run() {
+    this.httpServer.listen(this.port, () => {
+      console.log('ok');
+    });
+  }
+
 }
 
-module.exports = Routes;
+module.exports = (port) => {
+  return new Server(port);
+}

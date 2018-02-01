@@ -1,8 +1,8 @@
 
-let assetsPages = (req, res) => {
+let homePage = (req, res) => {
   res.returnView('./public/views/index.html');
 }
 
 module.exports = {
-  "assetsPages": assetsPages
+  "homePage": homePage
 };
