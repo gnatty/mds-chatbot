@@ -36,20 +36,30 @@ class Chat {
     return false;
   }
 
+  isBotCommandExist(message) {
+    let msg = this.getCommand(message);
+    return this.bot.exist(msg.prefix);
+  }
+
+  isBotCommandExistWithAccess(message, access) {
+    let msg = this.getCommand(message);
+    return this.bot.existWithAccess(msg.prefix, access);
+  }
+
   getCommand(message) {
     let cmdRes = message.split(this.regex);
     return {
-      'cmd'    : cmdRes[1],
-      'value'  : cmdRes[2].trim()
+      'prefix': cmdRes[1],
+      'value': cmdRes[2].trim()
     };
   }
 
   validator(obj) {
     return {
-      "isValidObject"   : this.isValidObject(obj),
-      "isEmptyMessage"  : this.isEmptyMessage(obj.message),
-      "isCommand"       : this.isCommand(obj.message),
-      "isEmptyToken"    : this.isEmptyToken(obj.token)
+      "isValidObject" : this.isValidObject(obj),
+      "isEmptyMessage" : this.isEmptyMessage(obj.message),
+      "isCommand" : this.isCommand(obj.message),
+      "isEmptyToken" : this.isEmptyToken(obj.token)
     };
   }
 

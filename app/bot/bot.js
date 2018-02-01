@@ -1,6 +1,6 @@
 const bot           = require('./../lib/bot.js');
-const helpBot       = require('./helpBot.js');
-const registerBot   = require('./registerBot.js');
+const helpBot       = require('./help-bot.js');
+const registerBot   = require('./register-bot.js');
 const initBot       = new bot();
 
 initBot.add(helpBot);

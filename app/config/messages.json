@@ -1,3 +1,5 @@
 {
-  "error_token": "You need to be connected !<br>log in or create a new account.<br>/login username password<br>/register username password"
+  "error_token": "You need to be connected !<br>log in or create a new account.<br>/login username password<br>/register username password",
+  "error_cmd": "Not a valid command",
+  "error_cmd_access": "Not a valid command access"
 }

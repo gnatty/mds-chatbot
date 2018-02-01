@@ -20,7 +20,7 @@ module.exports = (socket, chat) => {
         */
       case ( Object.is(validator.isCommand, false) && Object.is(validator.isEmptyToken, true) ):
         log("send message without be logged.");
-        actions.EMIT_MESSAGE(socket, obj);
+        actions.EMIT_GLOBAL(socket, obj);
         return true;
       break;
       /**
@@ -28,8 +28,7 @@ module.exports = (socket, chat) => {
         */
       case ( Object.is(validator.isCommand, false) && Object.is(validator.isEmptyToken, false) ):
         log("send message");
-        actions.EMIT_MESSAGE(socket, obj);
-        actions.BROADCAST_MESSAGE(socket, obj);
+        actions.EMIT_GLOBAL(socket, obj);
         return true;
       break;
       /**
@@ -37,6 +36,7 @@ module.exports = (socket, chat) => {
         */
       case ( Object.is(validator.isCommand, true) && Object.is(validator.isEmptyToken, false) ):
         log("send command");
+        log(chat.isBotCommandExist(obj.message));
         actions.EMIT_MESSAGE(socket, obj);
         return true;
       break;
@@ -44,8 +44,7 @@ module.exports = (socket, chat) => {
         * Visitor user command.
         */
       case ( Object.is(validator.isCommand, true) && Object.is(validator.isEmptyToken, true) ):
-        log("send command without be logged");
-        actions.EMIT_MESSAGE(socket, obj);
+        actions.VISITOR_COMMAND(socket, obj, chat);
         return true;
       break;
       /**
