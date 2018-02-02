@@ -11,16 +11,16 @@ class Server {
     this.routes = [];
     this.assetsPath;
     this.librariesPath;
-    this.librariesDirName = "lib";
+    this.librariesDirName = 'lib';
     this.httpServer;
   }
 
   get(path, action) {
-    this.addRoute("GET", path, action);
+    this.addRoute('GET', path, action);
   }
 
   post(path, action) {
-    this.addRoute("POST", path, action);
+    this.addRoute('POST', path, action);
   }
 
   addRoute(method, path, action) {
@@ -33,9 +33,9 @@ class Server {
     } else {
       this.routes.push(
         {
-          "method"  : method,
-          "path"    : path,
-          "action"  : action
+          'method'  : method,
+          'path'    : path,
+          'action'  : action
         }
       );
       log(`New Route added\nMethod : ${method}\nPath : ${path}`);
@@ -61,7 +61,7 @@ class Server {
     if(typeof searchRes == 'undefined') {
       // --- Throw error.
       this.errorPage(req, res);
-      log("Route not found");
+      log('Route not found');
     } else {
       searchRes.action(req, resL);
     }
@@ -79,7 +79,7 @@ class Server {
     if(typeof this.assetsPath == 'undefined') {
       return false;
     }
-    let regex = new RegExp("^\/" + this.assetsPath + "\/(.*)$", "g");
+    let regex = new RegExp('^\/' + this.assetsPath + '\/(.*)$', 'g');
     return regex.test(path);
   }
 

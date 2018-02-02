@@ -10,49 +10,44 @@ module.exports = (socket, chat) => {
 
     // --- ERROR BAD REQUEST.
     if( !validator.isValidObject ) {
-      log("not a valid object");
+      log('not a valid object');
       return false;
     }
 
     switch(true) {
-      /**
-        * Normal message without token.
-        */
-      case ( Object.is(validator.isCommand, false) && Object.is(validator.isEmptyToken, true) ):
-        log("send message without be logged.");
-        actions.EMIT_GLOBAL(socket, obj);
-        return true;
+    /**
+      * Normal message without token.
+      */
+    case ( Object.is(validator.isCommand, false) && Object.is(validator.isEmptyToken, true) ):
+      log('send message without be logged.');
+      actions.EMIT_GLOBAL(socket, obj);
       break;
-      /**
-        * Normal message.
-        */
-      case ( Object.is(validator.isCommand, false) && Object.is(validator.isEmptyToken, false) ):
-        log("send message");
-        actions.EMIT_GLOBAL(socket, obj);
-        return true;
+    /**
+      * Normal message.
+      */
+    case ( Object.is(validator.isCommand, false) && Object.is(validator.isEmptyToken, false) ):
+      log('send message');
+      actions.EMIT_GLOBAL(socket, obj);
       break;
-      /**
-        * Logged user command.
-        */
-      case ( Object.is(validator.isCommand, true) && Object.is(validator.isEmptyToken, false) ):
-        log("send command");
-        log(chat.isBotCommandExist(obj.message));
-        actions.EMIT_MESSAGE(socket, obj);
-        return true;
+    /**
+      * Logged user command.
+      */
+    case ( Object.is(validator.isCommand, true) && Object.is(validator.isEmptyToken, false) ):
+      log('send command');
+      log(chat.isBotCommandExist(obj.message));
+      actions.EMIT_MESSAGE(socket, obj);
       break;
-      /**
-        * Visitor user command.
-        */
-      case ( Object.is(validator.isCommand, true) && Object.is(validator.isEmptyToken, true) ):
-        actions.VISITOR_COMMAND(socket, obj, chat);
-        return true;
+    /**
+      * Visitor user command.
+      */
+    case ( Object.is(validator.isCommand, true) && Object.is(validator.isEmptyToken, true) ):
+      actions.VISITOR_COMMAND(socket, obj, chat);
       break;
-      /**
-        * Not recognized action.
-        */
-      default:
-        log("err action not found.");
-        return false;
+    /**
+      * Not recognized action.
+      */
+    default:
+      log('err action not found.');
       break;
     }
 

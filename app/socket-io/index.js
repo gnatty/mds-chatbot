@@ -7,4 +7,4 @@ module.exports = {
       on(socket, chat);
     });
   }
-}
+};

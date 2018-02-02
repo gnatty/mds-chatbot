@@ -1,41 +1,29 @@
-class Chat {
 
-  constructor(commandesList = 'undefined') {
-    this.regex = new RegExp("^\/([a-zA-Z0-9]+)((\\s(.*))?)$", "g");
-    this.commandesList = [];
-    if(typeof commandesList != 'undefined') {
-      this.commandesList = commandesList;
-    }
-  }
 
-  isCommande(message) {
-    let res = message.split(this.regex);
-    if(res.length < 3 || !this.commandesList.includes(res[1]) ) {
-      return false;
-    }
-    return true;
-  }
 
-  getCommande(message) {
-    let cmdRes = message.split(this.regex);
-    return {
-      "cmd"   : cmdRes[1],
-      "value" :  cmdRes[2]
-    };
-  }
 
+
+const regex = /^\/([a-zA-Z0-9]+)((\s([a-zA-Z0-9]+))(\s(.*))?)?$/g;
+const str = `-/user`;
+let m = regex.exec(str);
+
+
+let prefix;
+let cmd;
+let val;
+
+
+
+if( Object.is(m, null) ) {
+  console.log('no a cmd');
+} else {
+
+  prefix = m[1];
+  cmd = m[4];
+  val = m[6];
+
+  console.log(m);
+  console.log('prefix : ' + prefix);
+  console.log('cmd : ' + cmd);
+  console.log('val : ' + val);
 }
-
-
-let cmdList = [
-  'cmd',
-  'help',
-  'register'
-];
-
-let ee = new Chat(cmdList);
-
-if(ee.isCommande("/cmd")) {
-  console.log(ee.getCommande("/cmd"));
-}
-

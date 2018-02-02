@@ -15,4 +15,6 @@ var selectorChatContent   = '.chat-content';
   * Socket IO
   *
   */
+
+
 var socket = io();
