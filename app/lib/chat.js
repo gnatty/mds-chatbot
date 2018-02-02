@@ -2,7 +2,7 @@ class Chat {
 
   constructor(bot) {
     this.bot    = bot;
-    this.regex  = new RegExp("^\/([a-zA-Z0-9]+)((\\s(.*))?)$", "g");
+    this.regex = /^\/([a-zA-Z0-9]+)((\s([a-zA-Z0-9]+))(\s(.*))?)?$/g;
   }
 
   getBot() {
@@ -10,47 +10,47 @@ class Chat {
   }
 
   isCommand(message) {
-    let res = message.split(this.regex);
-    return res.length >= 3;
+    let res = this.getCommand(message);
+    return !Object.is(res, null);
   }
 
   isEmptyMessage(message) {
-    if(typeof message == 'undefined' || message == "") {
+    if(typeof message == 'undefined' || message == '') {
       return true;
     }
     return false;
   }
 
   isValidObject(obj) {
-    if(typeof obj != "object" 
-      || typeof obj.message != "string" || typeof obj.token != "string") {
+    if(typeof obj != 'object' 
+      || typeof obj.message != 'string' || typeof obj.token != 'string') {
       return false;
     }
     return true;
   }
 
   isEmptyToken(token) {
-    if(typeof token == 'undefined' || token == "") {
+    if(typeof token == 'undefined' || token == '') {
       return true;
     }
     return false;
   }
 
-  isBotCommandExist(message) {
-    let msg = this.getCommand(message);
-    return this.bot.exist(msg.prefix);
-  }
-
-  isBotCommandExistWithAccess(message, access) {
-    let msg = this.getCommand(message);
-    return this.bot.existWithAccess(msg.prefix, access);
+  isBotCommandExist(message, type) {
+    let cmd = this.getCommand(message);
+    return this.bot.exist(cmd, type);
   }
 
   getCommand(message) {
-    let cmdRes = message.split(this.regex);
+    this.regex.lastIndex = 0; // reset last index property.
+    let res = this.regex.exec(message);
+    if( Object.is(res, null) ) {
+      return null;
+    }
     return {
-      'prefix': cmdRes[1],
-      'value': cmdRes[2].trim()
+      'prefix': res[1],
+      'action': res[4],
+      'val': res[6]
     };
   }
 

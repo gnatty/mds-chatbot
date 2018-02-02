@@ -120,7 +120,7 @@ class Server {
 
   run() {
     this.httpServer.listen(this.port, () => {
-      console.log('ok');
+      log(`Server running on port ${this.port}`);
     });
   }
 

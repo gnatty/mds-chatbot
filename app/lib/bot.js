@@ -2,6 +2,8 @@ class Bot {
 
   constructor(bots) {
     this.bots = typeof bots == 'undefined' ? [] : bots;
+    this.regex = /^\/([a-zA-Z0-9]+)((\s([a-zA-Z0-9]+))(\s(.*))?)?$/g;
+    this.defaultAction = '_default';
   }
 
   add(bot) {
@@ -14,56 +16,63 @@ class Bot {
     });
   }
 
-  exist(prefix) {
-    let res = this.find(prefix);
-    if(typeof res == 'undefined') {
-      return false;
+  getCommand(message) {
+    this.regex.lastIndex = 0; // reset last index property.
+    let res = this.regex.exec(message);
+    if( Object.is(res, null) ) {
+      return null;
     }
-    return true;
+    return {
+      'prefix': res[1],
+      'action': res[4],
+      'val': res[6]
+    };
   }
 
-  existWithAccess(prefix, access) {
-    let res = this.find(prefix);
-    let search = res.access.find( (role) => {
-      return role == access;
-    });
+  exist(cmd, access) {
+    let isDefaultAction = false;
+    let res = {
+      'bot_exist': false,
+      'bot_access': false,
+      'action_exist': null,
+      'action_access': null,
+      'cmd': cmd
+    };
+    let search = this.find(cmd.prefix);
     if(typeof search == 'undefined') {
-      return false;
+      return res;
     }
-    return true;
-  }
-
-  actionExist(prefix, action) {
-    let res = this.findByAction(prefix, action);
-    console.log(res);
-    if( Object.is(res, false) ) {
-      return false;
+    res.bot_exist = true;
+    // --- bot access.
+    if(search.access.length === 0) {
+      res.bot_access = true;
     }
-    return true;
-  }
-
-  findByAction(prefix, action) {
-    let res = this.find(prefix);
-    if(typeof res == 'undefined') {
-      return false;
-    }
-    for(let act in res.actions) {
-      if(act == action) {
-        return res.actions[act];
+    search.access.find( (acc) => {
+      if(acc == access) {
+        res.bot_access = true;
+      }
+    });
+    // --- bot action.
+    if( typeof cmd.action == 'undefined' ) {
+      cmd.action = this.defaultAction;
+    } 
+    for(let action in search.actions) {
+      if(action == cmd.action) {
+        let findAction = search.actions[action];
+        findAction.access.find( (acc) => {
+          if( acc == access ) {
+            res.action_access = true;
+          }
+        });
+        res.action_exist = true;
       }
     }
-    return false;
-  }
-
-  findByActionWithAccess(prefix, action, access) {
-    let res = this.findByAction(prefix, action);
-    let search = res.access.find( (role) => {
-      return role == access;
-    });
-    if(typeof search == 'undefined') {
-      return false;
+    if( Object.is(res.action_exist, null) ) {
+      res.action_exist = false;
+    } else if( Object.is(res.action_access, null) ) {
+      res.action_access = false;
     }
-    return true;
+    return res;
   }
 
 }

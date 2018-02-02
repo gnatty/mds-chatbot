@@ -37,24 +37,29 @@ let actions = {
   },
   'COMMAND': (type, socket, obj, chat) => {
 
-    log('access bot : ' + chat.isBotCommandExistWithAccess(obj.message, type));
-    log('type : ' + type);
-    if( !chat.isBotCommandExist(obj.message) ) {
+    let testCmd = chat.isBotCommandExist(obj.message, type);
+    log('====> command : ');
+    log(testCmd);
+
+    switch(true) {
+    /**
+      * Not found bot.
+      */
+    case Object.is(testCmd.exist, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd);
-      return false;
-    } else if( !chat.isBotCommandExistWithAccess(obj.message, type) ) {
+    break;
+    /**
+      * Access not granded.
+      */
+    case Object.is(testCmd.exist, true) && Object.is(testCmd.access, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd_access);
-      return false;
-    } else {
-      let cmd = chat.getCommand(obj.message);
-      if( !chat.bot.actionExist(cmd.prefix, cmd.value) ) {
-        actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd);
-        return false;
-      } else {
-        let res = chat.bot.findByAction(cmd.prefix, cmd.value);
-        actions.EMIT_BOT_RESPONSE(socket, res.action.call());
-        return true;
-      }
+    break;
+    /**
+      * Search command.
+      */
+    default:
+
+    break;
     }
   },
   'VISITOR_COMMAND': (socket, obj, chat) => {

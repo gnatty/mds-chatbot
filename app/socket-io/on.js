@@ -34,7 +34,6 @@ module.exports = (socket, chat) => {
       */
     case ( Object.is(validator.isCommand, true) && Object.is(validator.isEmptyToken, false) ):
       log('send command');
-      log(chat.isBotCommandExist(obj.message));
       actions.EMIT_MESSAGE(socket, obj);
       break;
     /**
