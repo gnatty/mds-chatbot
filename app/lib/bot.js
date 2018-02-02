@@ -2,7 +2,7 @@ class Bot {
 
   constructor(bots) {
     this.bots = typeof bots == 'undefined' ? [] : bots;
-    this.regex = /^\/([a-zA-Z0-9]+)((\s([a-zA-Z0-9]+))(\s(.*))?)?$/g;
+    this.regex = /^\/([a-zA-Z0-9]+)((\s([a-zA-Z0-9]+))(\s(.*))?)?/g;
     this.defaultAction = '_default';
   }
 

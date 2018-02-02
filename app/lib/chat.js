@@ -2,7 +2,7 @@ class Chat {
 
   constructor(bot) {
     this.bot    = bot;
-    this.regex = /^\/([a-zA-Z0-9]+)((\s([a-zA-Z0-9]+))(\s(.*))?)?$/g;
+    this.regex = /^\/([a-zA-Z0-9]+)((\s([a-zA-Z0-9]+))(\s(.*))?)?/g;
   }
 
   getBot() {

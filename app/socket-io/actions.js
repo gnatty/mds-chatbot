@@ -1,5 +1,6 @@
 const debug = require('debug');
 const log = debug('log::socket');
+const logCmd = debug('log::socket::cmd');
 const messages = require('./../config/messages.json');
 
 let actions = {
@@ -38,27 +39,38 @@ let actions = {
   'COMMAND': (type, socket, obj, chat) => {
 
     let testCmd = chat.isBotCommandExist(obj.message, type);
-    log('====> command : ');
-    log(testCmd);
+    logCmd(testCmd);
 
     switch(true) {
     /**
-      * Not found bot.
+      * Command not found.
       */
-    case Object.is(testCmd.exist, false):
+    case Object.is(testCmd.bot_exist, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd);
     break;
     /**
-      * Access not granded.
+      * Command access required.
       */
-    case Object.is(testCmd.exist, true) && Object.is(testCmd.access, false):
+    case Object.is(testCmd.bot_exist, true) && Object.is(testCmd.bot_access, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd_access);
     break;
     /**
-      * Search command.
+      * Action not found.
+      */
+    case Object.is(testCmd.action_exist, false):
+      actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd_action);
+    break;
+    /**
+      * Action access required.
+      */
+    case Object.is(testCmd.action_exist, true) && Object.is(testCmd.action_access, false):
+      actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd_action_access);
+    break;
+    /**
+      * Execute action.
       */
     default:
-
+      actions.EMIT_MESSAGE_ERROR(socket, 'cmd action execute');
     break;
     }
   },
