@@ -30,7 +30,6 @@ class Bot {
   }
 
   exist(cmd, access) {
-    let isDefaultAction = false;
     let res = {
       'bot_exist': false,
       'bot_access': false,

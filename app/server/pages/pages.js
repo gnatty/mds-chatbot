@@ -1,5 +1,5 @@
 let homePage = (req, res) => {
-  res.returnView('./public/views/index.html');
+  res.returnView('./dist/views/index.html');
 };
 
 module.exports = {

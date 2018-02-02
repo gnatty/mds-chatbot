@@ -1,11 +1,12 @@
-const fs    = require('fs');
-const path  = require('path');
-const mime  = require('mime-types');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime-types');
 
 class Response {
 
   constructor(res) {
     this.res = res;
+    this.errorRes = {'error': 'ok'};
   }
 
   returnJson(code, data) {
@@ -16,24 +17,23 @@ class Response {
 
   returnView(path) {
     fs.readFile(path, 'utf8', (err, data) => {
-      if(err) { 
-        this.returnJson(400, "ok");
+      if (err) {
+        this.returnJson(400, JSON.stringify(this.errorRes));
       } else {
         this.res.writeHead(200, {'Content-Type': 'text/html'});
         this.res.write(data);
         this.res.end();
       }
     });
-  } 
+  }
 
   returnAssets(uriPath) {
-    let filePath      = "./public" + uriPath;
+    let filePath = './dist' + uriPath;
     let fileExtension = path.extname(filePath);
-    let fileMineType  = mime.lookup(fileExtension);
-    
+    let fileMineType = mime.lookup(fileExtension);
     fs.readFile(filePath, 'utf8', (err, data) => {
-      if(err) { 
-        this.returnJson(400, "ok");
+      if (err) {
+        this.returnJson(400, JSON.stringify(this.errorRes));
       } else {
         this.res.writeHead(200, {'Content-Type': fileMineType});
         this.res.write(data);
@@ -43,13 +43,13 @@ class Response {
   } 
 
   returnLibrary(uriPath) {
-    let filePath = "./node_modules" + (uriPath.replace("/lib", ""));
+    let filePath = './node_modules' + (uriPath.replace('/lib', ''));
     let fileExtension = path.extname(filePath);
-    let fileMineType  = mime.lookup(fileExtension);
+    let fileMineType = mime.lookup(fileExtension);
 
     fs.readFile(filePath, 'utf8', (err, data) => {
-      if(err) { 
-        this.returnJson(400, "ok");
+      if (err) {
+        this.returnJson(400, JSON.stringify(this.errorRes));
       } else {
         this.res.writeHead(200, {'Content-Type': fileMineType});
         this.res.write(data);

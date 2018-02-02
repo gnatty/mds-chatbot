@@ -5,19 +5,30 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "DEBUG=log* node index"
+    "debug": "DEBUG=log* node index",
+    "debug-eslint-brower": "eslint --env browser app/public",
+    "debug-eslint-node": "eslint --env node app/server",
+    "debug-eslint": "npm run debug-eslint-node && npm run debug-eslint-brower"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "browserify": "^15.2.0",
     "debug": "^3.1.0",
-    "jquery": "^3.3.1",
     "jsonwebtoken": "^8.1.1",
     "mime-types": "^2.1.17",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
-    "eslint": "^4.16.0"
+    "eslint": "^4.16.0",
+    "gulp": "^3.9.1",
+    "gulp-buffer": "0.0.2",
+    "gulp-cli": "^2.0.1",
+    "gulp-minify": "^2.1.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-tap": "^1.0.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8"
   }
 }

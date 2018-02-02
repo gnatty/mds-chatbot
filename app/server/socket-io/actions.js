@@ -1,5 +1,4 @@
 const debug = require('debug');
-const log = debug('log::socket');
 const logCmd = debug('log::socket::cmd');
 const messages = require('./../config/messages.json');
 
@@ -47,31 +46,31 @@ let actions = {
       */
     case Object.is(testCmd.bot_exist, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd);
-    break;
+      break;
     /**
       * Command access required.
       */
     case Object.is(testCmd.bot_exist, true) && Object.is(testCmd.bot_access, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd_access);
-    break;
+      break;
     /**
       * Action not found.
       */
     case Object.is(testCmd.action_exist, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd_action);
-    break;
+      break;
     /**
       * Action access required.
       */
     case Object.is(testCmd.action_exist, true) && Object.is(testCmd.action_access, false):
       actions.EMIT_MESSAGE_ERROR(socket, messages.error_cmd_action_access);
-    break;
+      break;
     /**
       * Execute action.
       */
     default:
       actions.EMIT_MESSAGE_ERROR(socket, 'cmd action execute');
-    break;
+      break;
     }
   },
   'VISITOR_COMMAND': (socket, obj, chat) => {

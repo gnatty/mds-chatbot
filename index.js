@@ -1,17 +1,15 @@
 const port = 8090;
-const server = require('./app/lib/server.js')(port);
-const pages = require('./app/pages/pages.js');
-
-const bot = require('./app/bot/bot.js');
-const chat = require('./app/lib/chat.js')(bot);
-const io = require('./app/socket-io/index.js');
+const server = require('./app/server/lib/server.js')(port);
+const pages = require('./app/server/pages/pages.js');
+const bot = require('./app/server/bot/bot.js');
+const chat = require('./app/server/lib/chat.js')(bot);
+const io = require('./app/server/socket-io/index.js');
 
 server.get('/', pages.homePage);
 server.assets('assets');
 server.libraries([
   'bootstrap',
-  'socket.io-client',
-  'jquery'
+  'socket.io-client'
 ]);
 
 server.init();

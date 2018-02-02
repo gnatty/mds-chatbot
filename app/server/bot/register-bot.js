@@ -1,7 +1,7 @@
-let bot = {
+const bot = {
 
-  'prefix': 'help',
-  'name': 'Bot helper',
+  'prefix': 'register',
+  'name': 'Bot Register',
   'access': ['visitor', 'logged'],
 
   'actions': {
@@ -17,13 +17,7 @@ let bot = {
         return 'default bot message register';
       }
     },
-    'mydata': {
-      'access': ['logged'],
-      'action': () => {
-        return 'default bot message my data';
-      }
-    },
   }
-}
+};
 
 module.exports = bot;

@@ -1,7 +1,6 @@
 const http = require('http');
 const debug = require('debug');
 const log = debug('log::server');
-const logServer = debug('log::server');
 const response = require('./response.js');
 
 class Server {
@@ -79,7 +78,7 @@ class Server {
     if(typeof this.assetsPath == 'undefined') {
       return false;
     }
-    let regex = new RegExp('^\/' + this.assetsPath + '\/(.*)$', 'g');
+    let regex = new RegExp('^/' + this.assetsPath + '/(.*)$', 'g');
     return regex.test(path);
   }
 
@@ -128,4 +127,4 @@ class Server {
 
 module.exports = (port) => {
   return new Server(port);
-}
+};

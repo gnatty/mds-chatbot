@@ -56,10 +56,10 @@ class Chat {
 
   validator(obj) {
     return {
-      "isValidObject" : this.isValidObject(obj),
-      "isEmptyMessage" : this.isEmptyMessage(obj.message),
-      "isCommand" : this.isCommand(obj.message),
-      "isEmptyToken" : this.isEmptyToken(obj.token)
+      'isValidObject' : this.isValidObject(obj),
+      'isEmptyMessage' : this.isEmptyMessage(obj.message),
+      'isCommand' : this.isCommand(obj.message),
+      'isEmptyToken' : this.isEmptyToken(obj.token)
     };
   }
 
@@ -67,4 +67,4 @@ class Chat {
 
 module.exports = (bot) => {
   return new Chat(bot);
-}
+};

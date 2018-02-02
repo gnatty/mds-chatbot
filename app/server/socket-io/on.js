@@ -4,6 +4,8 @@ const actions = require('./actions.js');
 
 module.exports = (socket, chat) => {
 
+  log('new user');
+  
   socket.on('user::message', (obj) => {
 
     let validator = chat.validator(obj);
