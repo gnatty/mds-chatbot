@@ -1,9 +1,8 @@
-const bot = require('./../lib/bot.js');
+const Bot = require('./../lib/bot.js');
 const helpBot = require('./help-bot.js');
-const registerBot = requr-botire('./registe.js');
-const initBot = new bot();
+const initBot = new Bot();
 
 initBot.add(helpBot);
-initBot.add(registerBot);
 
 module.exports = initBot;
+

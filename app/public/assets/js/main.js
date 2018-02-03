@@ -9,7 +9,7 @@ let input = document.querySelector('.inputSendMessage');
   * Triger on click button.
   *
   */
-btn.addEventListener('click', function() {
+btn.addEventListener('click', () => {
   actions.SEND_MESSAGE();
 });
 
@@ -17,8 +17,8 @@ btn.addEventListener('click', function() {
   * Triger on presskey 'Enter'
   *
   */
-input.addEventListener('keypress', function(event) {
-  if(event.code == 'Enter') {
+input.addEventListener('keypress', (event) => {
+  if (event.code === 'Enter') {
     actions.SEND_MESSAGE(socket);
   }
 });
@@ -27,10 +27,10 @@ input.addEventListener('keypress', function(event) {
   * SOCKET IO
   *
   */
-socket.on('user::newMessage::sender', function(data) {
+socket.on('user::newMessage::sender', (data) => {
   actions.SET_MESSAGE('right', data);
 });
 
-socket.on('user::newMessage::all', function(data) {
+socket.on('user::newMessage::all', (data) => {
   actions.SET_MESSAGE('left', data);
 });

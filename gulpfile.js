@@ -6,8 +6,12 @@ const tap = require('gulp-tap');
 const buffer = require('gulp-buffer');
 const browserify = require('browserify');
 const minify = require('gulp-minify');
+const nodemon = require('gulp-nodemon');
 
 const configPath = {
+  'server': {
+    'js': './app/server/**/*.js'
+  },
   'build': {
     'js': './app/public/assets/js/**/*.js',
     'js_main': './app/public/assets/js/main.js'
@@ -37,10 +41,20 @@ gulp.task('dist::js', () => {
     .pipe(gulp.dest(configPath.output.js));
 });
 
-gulp.task('dist::js:uglify', () => {
+gulp.task('dist::js:minify', () => {
   gulp.src(configPath.output.js_minify)
     .pipe(minify())
     .pipe(gulp.dest(configPath.output.js));
 });
 
-gulp.task('default', ['dist::js', 'dist::js:uglify']);
+
+gulp.task('server', () => {
+  nodemon(
+    {
+      'exec': 'npm run debug',
+      'watch': configPath.server.js
+    }
+  )
+});
+
+gulp.task('default', ['dist::js', 'dist::js:minify', 'server']);

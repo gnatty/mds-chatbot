@@ -16,7 +16,7 @@ const bot = {
       'action': () => {
         return 'default bot message register';
       }
-    },
+    }
   }
 };
 

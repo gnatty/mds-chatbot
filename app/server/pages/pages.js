@@ -1,4 +1,4 @@
-let homePage = (req, res) => {
+const homePage = (req, res) => {
   res.returnView('./dist/views/index.html');
 };
 

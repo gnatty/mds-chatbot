@@ -21,14 +21,17 @@
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
+    "browser-sync": "^2.23.6",
     "eslint": "^4.16.0",
     "gulp": "^3.9.1",
     "gulp-buffer": "0.0.2",
     "gulp-cli": "^2.0.1",
     "gulp-minify": "^2.1.0",
+    "gulp-nodemon": "^2.2.1",
     "gulp-plumber": "^1.2.0",
     "gulp-tap": "^1.0.1",
     "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8"
+    "gulp-util": "^3.0.8",
+    "nodemon": "^1.14.12"
   }
 }
